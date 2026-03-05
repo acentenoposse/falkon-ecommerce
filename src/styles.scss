@@ -1,0 +1,116 @@
+/* Falkon Wear - Global Styles (Sass)
+   Paleta: negro, marrón, beige, gris
+*/
+
+:root {
+  /* Brand */
+  --fw-black: #0f0f10;
+  --fw-brown: #3a2a22;
+  --fw-beige: #e9dfcf;
+  --fw-gray-900: #1b1c1f;
+  --fw-gray-700: #3a3d44;
+  --fw-gray-500: #6b7280;
+  --fw-gray-200: #e6e7ea;
+
+  /* Semantic */
+  --fw-bg: #0f0f10;
+  --fw-surface: #151619;
+  --fw-surface-2: #1b1c20;
+  --fw-text: #f5f5f4;
+  --fw-muted: rgba(245, 245, 244, 0.72);
+  --fw-border: rgba(233, 223, 207, 0.14);
+  --fw-accent: #e9dfcf; /* beige */
+  --fw-accent-2: #8b6b55; /* brown-ish */
+
+  /* Sizing */
+  --fw-radius-sm: 10px;
+  --fw-radius-md: 14px;
+  --fw-radius-lg: 20px;
+
+  /* Shadows */
+  --fw-shadow-1: 0 1px 2px rgba(0,0,0,0.35);
+  --fw-shadow-2: 0 12px 40px rgba(0,0,0,0.35);
+
+  /* Layout */
+  --fw-container: 1200px;
+
+  /* Motion */
+  --fw-ease: cubic-bezier(.2,.9,.2,1);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body { height: auto }
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  background: radial-gradient(1000px 500px at 15% -10%, rgba(233,223,207,0.08), transparent 55%),
+              radial-gradient(800px 500px at 90% 0%, rgba(139,107,85,0.12), transparent 55%),
+              var(--fw-bg);
+  color: var(--fw-text);
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+button, input, select { font: inherit; }
+
+.fw-container {
+  width: min(var(--fw-container), calc(100% - 32px));
+  margin-inline: auto;
+}
+
+.fw-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--fw-border);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.02);
+  color: var(--fw-muted);
+  backdrop-filter: blur(8px);
+}
+
+.fw-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--fw-border);
+  background: rgba(255,255,255,0.03);
+  color: var(--fw-text);
+  cursor: pointer;
+  transition: transform 180ms var(--fw-ease), background 180ms var(--fw-ease), border-color 180ms var(--fw-ease);
+}
+.fw-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(233,223,207,0.06);
+  border-color: rgba(233,223,207,0.22);
+}
+.fw-btn:active { transform: translateY(0px); }
+
+.fw-btn--primary {
+  background: linear-gradient(135deg, rgba(233,223,207,0.18), rgba(139,107,85,0.16));
+  border-color: rgba(233,223,207,0.22);
+}
+
+.fw-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--fw-border);
+  background: rgba(255,255,255,0.02);
+  color: var(--fw-text);
+  outline: none;
+  transition: border-color 180ms var(--fw-ease), background 180ms var(--fw-ease);
+}
+.fw-input::placeholder { color: rgba(245,245,244,0.55); }
+.fw-input:focus {
+  border-color: rgba(233,223,207,0.35);
+  background: rgba(255,255,255,0.03);
+}

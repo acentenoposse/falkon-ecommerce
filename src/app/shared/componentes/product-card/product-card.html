@@ -1,0 +1,17 @@
+<article class="card">
+  <div class="media">
+    <img [src]="producto.imagenUrl" [alt]="producto.nombre" loading="lazy" />
+    @if (producto.etiqueta) { <span class="tag">{{ producto.etiqueta }}</span> }
+    <button class="wish" type="button" aria-label="Agregar a favoritos">♡</button>
+  </div>
+
+  <div class="body">
+    <div class="name">{{ producto.nombre }}</div>
+    <div class="desc">{{ producto.descripcion }}</div>
+
+    <div class="row">
+      <div class="price">{{ producto.precio | currency:'ARS':'symbol-narrow':'1.0-0' }}</div>
+      <button class="fw-btn fw-btn--primary add" type="button">Agregar</button>
+    </div>
+  </div>
+</article>

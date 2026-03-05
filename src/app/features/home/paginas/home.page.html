@@ -1,0 +1,101 @@
+<fw-navbar (buscar)="onBuscar($event)"></fw-navbar>
+
+<main class="main">
+  <section class="hero">
+    <div class="fw-container hero__inner">
+      <div class="hero__text">
+        <div class="fw-chip">Falkon Wear • Colección 2026</div>
+        <h1>Menos ruido. <span>Más estilo.</span></h1>
+        <p>
+          Ropa urbana con cortes limpios, materiales buenos y una estética minimalista
+          en negro, beige y tonos tierra.
+        </p>
+
+        <div class="hero__cta">
+          <button class="fw-btn fw-btn--primary" type="button">Ver novedades</button>
+          <button class="fw-btn" type="button">Guía de talles</button>
+        </div>
+      </div>
+
+      <div class="hero__art" aria-hidden="true">
+        <div class="art__overlay"></div>
+        <div class="art__hint">Simple is More</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content">
+    <div class="fw-container content__inner">
+      <aside class="filters">
+        <div class="filters__header">
+          <div class="title">Filtros</div>
+          <button class="link" type="button">Avanzado</button>
+        </div>
+
+        <div class="block">
+          <div class="block__title">Categoría</div>
+          <div class="chips">
+            @for (c of categorias; track c.key) {
+              <button type="button" class="chip" [class.is-active]="categoria() === c.key" (click)="categoria.set(c.key)">
+                {{ c.label }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="block__title">Talle</div>
+          <div class="sizes">
+            <button class="size" type="button">S</button>
+            <button class="size" type="button">M</button>
+            <button class="size" type="button">L</button>
+            <button class="size" type="button">XL</button>
+          </div>
+          <div class="note">* (Mock por ahora)</div>
+        </div>
+
+        <div class="block">
+          <div class="block__title">Color</div>
+          <div class="colors">
+            <button class="dot" type="button" aria-label="Negro" style="--c:#111;"></button>
+            <button class="dot" type="button" aria-label="Marrón" style="--c:#3a2a22;"></button>
+            <button class="dot" type="button" aria-label="Beige" style="--c:#e9dfcf;"></button>
+            <button class="dot" type="button" aria-label="Gris" style="--c:#9aa0a6;"></button>
+          </div>
+          <div class="note">* (Mock por ahora)</div>
+        </div>
+      </aside>
+
+      <section class="results">
+        <div class="results__bar">
+          <div class="crumbs">
+            <span class="muted">Home</span>
+            <span class="sep">/</span>
+            <span>Ropa</span>
+          </div>
+
+          <div class="bar-right">
+            <div class="count">{{ productos().length }} resultados</div>
+
+            <label class="sort">
+              <span class="muted">Orden:</span>
+              <select class="select" [value]="orden()" (change)="orden.set(($any($event.target).value))">
+                <option value="popular">Popular</option>
+                <option value="precio-asc">Precio: menor a mayor</option>
+                <option value="precio-desc">Precio: mayor a menor</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="grid">
+          @for (p of productos(); track p.id) {
+            <fw-product-card [producto]="p"></fw-product-card>
+          }
+        </div>
+      </section>
+    </div>
+  </section>
+</main>
+
+<fw-footer></fw-footer>

@@ -1,0 +1,25 @@
+<header class="nav">
+  <div class="fw-container nav__inner">
+    <a class="brand" href="#">
+      <span class="brand__mark">FW</span>
+      <span class="brand__name">Falkon <span>Wear</span></span>
+    </a>
+
+    <div class="search">
+      <input class="fw-input" type="search" placeholder="¿Qué estás buscando?" (input)="onInput(($any($event.target).value))" />
+    </div>
+
+    <div class="actions">
+      <button class="fw-btn" type="button" aria-label="Favoritos">
+        <span class="icon">♡</span>
+        <span class="label">Favoritos</span>
+      </button>
+
+      <button class="fw-btn fw-btn--primary" type="button" aria-label="Carrito">
+        <span class="icon">🛒</span>
+        <span class="label">Carrito</span>
+        <span class="badge">0</span>
+      </button>
+    </div>
+  </div>
+</header>
