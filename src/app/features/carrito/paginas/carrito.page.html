@@ -1,0 +1,92 @@
+<fw-navbar></fw-navbar>
+
+<main class="main">
+  <div class="fw-container">
+    <div class="head">
+      <h1>Carrito</h1>
+      <a class="back" routerLink="/">Seguir comprando</a>
+    </div>
+
+    @if (carrito.items().length === 0) {
+      <section class="empty">
+        <div class="empty__card">
+          <div class="title">Tu carrito está vacío</div>
+          <div class="muted">Agregá productos y volvé acá para finalizar tu compra.</div>
+          <a class="fw-btn fw-btn--primary" routerLink="/">Ir al catálogo</a>
+        </div>
+      </section>
+    } @else {
+      <section class="layout">
+        <div class="list">
+          @for (it of carrito.items(); track it.producto.id) {
+            <article class="item">
+              <a class="thumb" [routerLink]="['/producto', it.producto.id]">
+                <img [src]="it.producto.imagenUrl" [alt]="it.producto.nombre" />
+              </a>
+
+              <div class="info">
+                <div class="top">
+                  <div>
+                    <div class="name">{{ it.producto.nombre }}</div>
+                    <div class="muted small">{{ it.producto.descripcion }}</div>
+                  </div>
+
+                  <button class="icon-btn" type="button" (click)="carrito.remove(it.producto.id)" aria-label="Quitar">
+                    ✕
+                  </button>
+                </div>
+
+                <div class="bottom">
+                  <div class="stepper" aria-label="Cantidad">
+                    <button class="step" type="button" (click)="carrito.dec(it.producto.id)">−</button>
+                    <span class="count">{{ it.cantidad }}</span>
+                    <button class="step" type="button" (click)="carrito.inc(it.producto.id)">+</button>
+                  </div>
+
+                  <div class="price">
+                    {{ (it.producto.precio * it.cantidad) | currency:'ARS':'symbol-narrow':'1.0-0' }}
+                  </div>
+                </div>
+              </div>
+            </article>
+          }
+
+          <button class="fw-btn clear" type="button" (click)="carrito.clear()">
+            Vaciar carrito
+          </button>
+        </div>
+
+        <aside class="summary">
+          <div class="summary__title">Resumen</div>
+
+          <div class="row">
+            <span class="muted">Subtotal</span>
+            <span>{{ carrito.subtotal() | currency:'ARS':'symbol-narrow':'1.0-0' }}</span>
+          </div>
+
+          <div class="row">
+            <span class="muted">Envío</span>
+            <span>{{ envio() | currency:'ARS':'symbol-narrow':'1.0-0' }}</span>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="row total">
+            <span>Total</span>
+            <span>{{ total() | currency:'ARS':'symbol-narrow':'1.0-0' }}</span>
+          </div>
+
+          <a class="fw-btn fw-btn--primary checkout" routerLink="/checkout">
+  Finalizar compra
+</a>
+
+          <div class="hint muted">
+            * Checkout simulado por ahora.
+          </div>
+        </aside>
+      </section>
+    }
+  </div>
+</main>
+
+<fw-footer></fw-footer>

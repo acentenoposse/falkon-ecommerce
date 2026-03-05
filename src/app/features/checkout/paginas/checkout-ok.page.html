@@ -1,0 +1,33 @@
+
+<fw-navbar></fw-navbar>
+
+<main class="main">
+  <div class="fw-container">
+    <section class="ok">
+      <div class="card">
+        <div class="badge">✓</div>
+        <h1>Compra confirmada</h1>
+        <p class="muted">
+          Orden <span class="id">{{ ordenId() }}</span> generada correctamente.
+        </p>
+
+        <div class="box">
+          <div class="row">
+            <span class="muted">Total</span>
+            <span class="total">{{ total() | currency:'ARS':'symbol-narrow':'1.0-0' }}</span>
+          </div>
+          <div class="muted tiny">
+            * Esto es un checkout simulado para portfolio.
+          </div>
+        </div>
+
+        <div class="actions">
+          <a class="fw-btn fw-btn--primary" routerLink="/">Volver al catálogo</a>
+          <a class="fw-btn" routerLink="/carrito">Ver carrito</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<fw-footer></fw-footer>

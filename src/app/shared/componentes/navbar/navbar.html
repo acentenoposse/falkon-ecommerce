@@ -1,12 +1,17 @@
 <header class="nav">
   <div class="fw-container nav__inner">
-    <a class="brand" href="#">
+    <a class="brand" routerLink="/">
       <span class="brand__mark">FW</span>
       <span class="brand__name">Falkon <span>Wear</span></span>
     </a>
 
     <div class="search">
-      <input class="fw-input" type="search" placeholder="¿Qué estás buscando?" (input)="onInput(($any($event.target).value))" />
+      <input
+        class="fw-input"
+        type="search"
+        placeholder="¿Qué estás buscando?"
+        (input)="onInput(($any($event.target).value))"
+      />
     </div>
 
     <div class="actions">
@@ -15,11 +20,13 @@
         <span class="label">Favoritos</span>
       </button>
 
-      <button class="fw-btn fw-btn--primary" type="button" aria-label="Carrito">
+      <a class="fw-btn fw-btn--primary" routerLink="/carrito" aria-label="Carrito">
         <span class="icon">🛒</span>
         <span class="label">Carrito</span>
-        <span class="badge">0</span>
-      </button>
+        <span class="badge" [class.is-empty]="carrito.totalItems() === 0">
+          {{ carrito.totalItems() }}
+        </span>
+      </a>
     </div>
   </div>
 </header>

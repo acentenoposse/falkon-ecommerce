@@ -1,0 +1,179 @@
+
+<fw-navbar></fw-navbar>
+
+<main class="main">
+  <div class="fw-container">
+
+    <div class="head">
+      <h1>Checkout</h1>
+      <a class="back" routerLink="/carrito">Volver al carrito</a>
+    </div>
+
+    @if (carrito.items().length === 0) {
+      <section class="empty">
+        <div class="empty__card">
+          <div class="title">No hay productos para comprar</div>
+          <div class="muted">Agregá productos al carrito y volvé a intentar.</div>
+          <a class="fw-btn fw-btn--primary" routerLink="/">Ir al catálogo</a>
+        </div>
+      </section>
+    } @else {
+
+      <section class="layout">
+        <form class="form" [formGroup]="form" (ngSubmit)="confirmar()">
+          <div class="card">
+            <div class="card__title">Datos de contacto</div>
+
+            <div class="grid2">
+              <label class="field">
+                <span>Nombre y apellido</span>
+                <input class="fw-input" formControlName="nombre" placeholder="Ej: Agustín Centeno" />
+                @if (invalid('nombre')) { <small class="err">Ingresá un nombre válido</small> }
+              </label>
+
+              <label class="field">
+                <span>Email</span>
+                <input class="fw-input" formControlName="email" placeholder="Ej: agustin@email.com" />
+                @if (invalid('email')) { <small class="err">Email inválido</small> }
+              </label>
+            </div>
+
+            <div class="grid2">
+              <label class="field">
+                <span>Teléfono</span>
+                <input class="fw-input" formControlName="telefono" placeholder="Ej: 351xxxxxxx" />
+                @if (invalid('telefono')) { <small class="err">Teléfono inválido</small> }
+              </label>
+
+              <label class="field">
+                <span>Notas (opcional)</span>
+                <input class="fw-input" formControlName="notas" placeholder="Ej: tocar timbre, dejar en recepción" />
+              </label>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card__title">Envío</div>
+
+            <div class="grid2">
+              <label class="field">
+                <span>Dirección</span>
+                <input class="fw-input" formControlName="direccion" placeholder="Ej: Av. Siempre Viva 742" />
+                @if (invalid('direccion')) { <small class="err">Dirección inválida</small> }
+              </label>
+
+              <label class="field">
+                <span>Ciudad</span>
+                <input class="fw-input" formControlName="ciudad" placeholder="Ej: Córdoba" />
+                @if (invalid('ciudad')) { <small class="err">Ciudad inválida</small> }
+              </label>
+            </div>
+
+            <div class="grid2">
+              <label class="field">
+                <span>Provincia</span>
+                <select class="fw-input" formControlName="provincia">
+                  <option value="" disabled>Seleccionar</option>
+                  <option>Córdoba</option>
+                  <option>Buenos Aires</option>
+                  <option>Santa Fe</option>
+                  <option>Mendoza</option>
+                  <option>Tucumán</option>
+                  <option>Salta</option>
+                  <option>Neuquén</option>
+                  <option>Río Negro</option>
+                  <option>Chubut</option>
+                </select>
+                @if (invalid('provincia')) { <small class="err">Elegí una provincia</small> }
+              </label>
+
+              <label class="field">
+                <span>Código postal</span>
+                <input class="fw-input" formControlName="cp" placeholder="Ej: 5000" />
+                @if (invalid('cp')) { <small class="err">CP inválido</small> }
+              </label>
+            </div>
+
+            <div class="shipping">
+              <button type="button" class="ship"
+                [class.is-active]="metodoEnvio() === 'estandar'"
+                (click)="metodoEnvio.set('estandar')">
+                <div class="t">Envío estándar</div>
+                <div class="m muted">24-72hs</div>
+                <div class="p">ARS 6.500</div>
+              </button>
+
+              <button type="button" class="ship"
+                [class.is-active]="metodoEnvio() === 'express'"
+                (click)="metodoEnvio.set('express')">
+                <div class="t">Envío express</div>
+                <div class="m muted">24hs</div>
+                <div class="p">ARS 9.900</div>
+              </button>
+
+              <button type="button" class="ship"
+                [class.is-active]="metodoEnvio() === 'retiro'"
+                (click)="metodoEnvio.set('retiro')">
+                <div class="t">Retiro en punto</div>
+                <div class="m muted">Gratis</div>
+                <div class="p">ARS 0</div>
+              </button>
+            </div>
+          </div>
+
+          <label class="accept">
+            <input type="checkbox" formControlName="aceptar" />
+            <span>Acepto los términos y condiciones (mock)</span>
+          </label>
+          @if (invalid('aceptar')) { <small class="err">Necesitás aceptar para continuar</small> }
+
+          <button class="fw-btn fw-btn--primary cta" type="submit" [disabled]="isSubmitting()">
+            @if (isSubmitting()) { Procesando... } @else { Confirmar compra }
+          </button>
+        </form>
+
+        <aside class="summary">
+          <div class="summary__title">Resumen</div>
+
+          <div class="items">
+            @for (it of carrito.items(); track it.producto.id) {
+              <div class="sitem">
+                <img [src]="it.producto.imagenUrl" [alt]="it.producto.nombre" />
+                <div class="si">
+                  <div class="n">{{ it.producto.nombre }}</div>
+                  <div class="q muted">{{ it.cantidad }} × {{ it.producto.precio | currency:'ARS':'symbol-narrow':'1.0-0' }}</div>
+                </div>
+                <div class="v">
+                  {{ (it.cantidad * it.producto.precio) | currency:'ARS':'symbol-narrow':'1.0-0' }}
+                </div>
+              </div>
+            }
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="row">
+            <span class="muted">Subtotal</span>
+            <span>{{ carrito.subtotal() | currency:'ARS':'symbol-narrow':'1.0-0' }}</span>
+          </div>
+
+          <div class="row">
+            <span class="muted">Envío</span>
+            <span>{{ costoEnvio() | currency:'ARS':'symbol-narrow':'1.0-0' }}</span>
+          </div>
+
+          <div class="row total">
+            <span>Total</span>
+            <span>{{ total() | currency:'ARS':'symbol-narrow':'1.0-0' }}</span>
+          </div>
+
+          <div class="hint muted">
+            * Checkout simulado. La “orden” se guarda en localStorage.
+          </div>
+        </aside>
+      </section>
+    }
+  </div>
+</main>
+
+<fw-footer></fw-footer>

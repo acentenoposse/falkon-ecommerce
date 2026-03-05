@@ -52,20 +52,33 @@
   align-items: center;
   gap: 10px;
 
-  .label { font-size: 14px; color: var(--fw-muted); }
+  .label {
+    font-size: 14px;
+    color: var(--fw-muted);
+  }
+
   .icon { font-size: 16px; }
 
   .badge {
     margin-left: 2px;
-    min-width: 20px;
+    min-width: 22px;
     height: 20px;
-    padding: 0 6px;
+    padding: 0 7px;
     border-radius: 999px;
     display: inline-grid;
     place-items: center;
     font-size: 12px;
     border: 1px solid rgba(233,223,207,0.22);
-    background: rgba(233,223,207,0.08);
+    background: rgba(233,223,207,0.10);
+    transition: transform 180ms var(--fw-ease), opacity 180ms var(--fw-ease);
+  }
+
+  .badge.is-empty {
+    opacity: 0.55;
+  }
+
+  a.fw-btn:hover .badge {
+    transform: scale(1.03);
   }
 }
 

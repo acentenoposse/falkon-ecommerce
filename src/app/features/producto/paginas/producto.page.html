@@ -1,0 +1,119 @@
+
+<fw-navbar></fw-navbar>
+
+<main class="main">
+  <div class="fw-container">
+
+    @if (!producto()) {
+      <section class="notfound">
+        <div class="card">
+          <div class="title">Producto no encontrado</div>
+          <div class="muted">Puede que el link esté mal o el producto ya no exista.</div>
+          <a class="fw-btn fw-btn--primary" routerLink="/">Volver al catálogo</a>
+        </div>
+      </section>
+    } @else {
+
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a routerLink="/" class="muted">Home</a>
+        <span class="sep">/</span>
+        <span>Producto</span>
+        <span class="sep">/</span>
+        <span class="current">{{ producto()!.nombre }}</span>
+      </nav>
+
+      <section class="layout">
+        <div class="gallery">
+          <div class="main-img">
+            <img [src]="imagenes()[activa()]" [alt]="producto()!.nombre" />
+            @if (producto()!.etiqueta) { <span class="tag">{{ producto()!.etiqueta }}</span> }
+          </div>
+
+          <div class="thumbs">
+            @for (img of imagenes(); track $index) {
+              <button
+                type="button"
+                class="thumb"
+                [class.is-active]="activa() === $index"
+                (click)="setImagen($index)"
+                aria-label="Cambiar imagen"
+              >
+                <img [src]="img" [alt]="producto()!.nombre + ' miniatura'" />
+              </button>
+            }
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="head">
+            <h1>{{ producto()!.nombre }}</h1>
+            <div class="price">{{ producto()!.precio | currency:'ARS':'symbol-narrow':'1.0-0' }}</div>
+          </div>
+
+          <p class="desc">{{ producto()!.descripcion }}</p>
+
+          <div class="meta">
+            <div class="pill">Envío a todo el país</div>
+            <div class="pill">Cambios 30 días</div>
+            <div class="pill">Calidad premium</div>
+          </div>
+
+          <div class="opts">
+            <div class="opt">
+              <div class="label">Talle</div>
+              <div class="choices">
+                @for (t of talles; track t) {
+                  <button type="button" class="choice"
+                    [class.is-active]="talle() === t"
+                    (click)="talle.set(t)">{{ t }}</button>
+                }
+              </div>
+              <div class="muted tiny">* mock por ahora</div>
+            </div>
+
+            <div class="opt">
+              <div class="label">Color</div>
+              <div class="choices">
+                @for (c of colores; track c) {
+                  <button type="button" class="choice"
+                    [class.is-active]="color() === c"
+                    (click)="color.set(c)">{{ c }}</button>
+                }
+              </div>
+              <div class="muted tiny">* mock por ahora</div>
+            </div>
+          </div>
+
+          <div class="buy">
+            @if (qty() === 0) {
+              <button class="fw-btn fw-btn--primary big" type="button" (click)="agregar()">
+                Agregar al carrito
+              </button>
+            } @else {
+              <div class="stepper" aria-label="Modificar cantidad">
+                <button class="step" type="button" (click)="dec()">−</button>
+                <span class="count">{{ qty() }}</span>
+                <button class="step" type="button" (click)="inc()">+</button>
+              </div>
+              <a class="fw-btn big" routerLink="/carrito">Ver carrito</a>
+            }
+          </div>
+
+          <div class="details">
+            <div class="drow">
+              <span class="muted">Categoría</span>
+              <span class="value">{{ producto()!.categoria }}</span>
+            </div>
+            <div class="drow">
+              <span class="muted">Stock</span>
+              <span class="value">{{ producto()!.stock ?? 0 }}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    }
+
+  </div>
+</main>
+
+<fw-footer></fw-footer>

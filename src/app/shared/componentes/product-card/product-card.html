@@ -1,9 +1,17 @@
 <article class="card">
-  <div class="media">
+  <a class="media" [routerLink]="['/producto', producto.id]">
     <img [src]="producto.imagenUrl" [alt]="producto.nombre" loading="lazy" />
-    @if (producto.etiqueta) { <span class="tag">{{ producto.etiqueta }}</span> }
+
+    @if (producto.etiqueta) {
+      <span class="tag">{{ producto.etiqueta }}</span>
+    }
+
+    @if (qty() > 0) {
+      <span class="qty-pill" aria-label="Cantidad en carrito">{{ qty() }}</span>
+    }
+
     <button class="wish" type="button" aria-label="Agregar a favoritos">♡</button>
-  </div>
+  </a>
 
   <div class="body">
     <div class="name">{{ producto.nombre }}</div>
@@ -11,7 +19,18 @@
 
     <div class="row">
       <div class="price">{{ producto.precio | currency:'ARS':'symbol-narrow':'1.0-0' }}</div>
-      <button class="fw-btn fw-btn--primary add" type="button">Agregar</button>
+
+      @if (qty() === 0) {
+        <button class="fw-btn fw-btn--primary add" type="button" (click)="agregar()">
+          Agregar
+        </button>
+      } @else {
+        <div class="stepper" aria-label="Modificar cantidad">
+          <button class="step" type="button" (click)="dec()">−</button>
+          <span class="count">{{ qty() }}</span>
+          <button class="step" type="button" (click)="inc()">+</button>
+        </div>
+      }
     </div>
   </div>
 </article>
